@@ -1,10 +1,8 @@
-﻿using System.Runtime.InteropServices;
-
-namespace pochodna
+﻿namespace Derivative
 {
-    internal class Program
+    public class Calculator
     {
-        static string calc(string ex)
+        public static string calc(string ex)
         {
             string before = "1";
             string[] frac;
@@ -23,9 +21,11 @@ namespace pochodna
                     power = int.Parse(ex.Split("^")[1]);
                     newPower = power - 1;
 
-                    if (before.Contains("/")) // if amoount of x is a fraction
+                    if (before.Contains("/")) // if amount of x is a fraction
                     {
                         frac = before.Split("/");
+                        if (frac[1] == "0")
+                            return "Error division by 0";
                         before = $"{int.Parse(frac[0]) * power}/{frac[1]}";
                     }
                     else
@@ -41,7 +41,7 @@ namespace pochodna
             return "0"; // derivative of any number is always 0
         }
 
-        static void derivative(string eq)
+        public static void loadDerivative(string eq)
         {
             List<string> result = new();
             List<int> opIndex = new() { 0 };
@@ -66,10 +66,10 @@ namespace pochodna
 
         static void Main(string[] args)
         {
-            Console.WriteLine("Fractions are only acceptable before x or as individual");
+            Console.WriteLine("Fractions are only acceptable before x with power or as individual");
             Console.WriteLine("Only powers of x are acceptable, the rest you have to do on your own :)");
             Console.WriteLine("Example input: 5x^3+5/6x^2-3x+x+2");
-            derivative(Console.ReadLine());
+            loadDerivative(Console.ReadLine());
         }
     }
 }
